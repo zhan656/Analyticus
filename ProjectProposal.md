@@ -11,32 +11,30 @@ The members are:
 </ul>
 <h2>Projects</h2>
 <ul>
-<li>Project 1:  Twitter Correlation to CDC Reporting Influenza-Like-Illnesses (ILI)
-<p><b>Can Twitter be used to determine influenza outbreaks?</b></p>
+<li>Project 1:  HHC Vaccination Correlation to CDC Reporting Influenza-Like-Illnesses (ILI)
+<p><b>Is there a corelation between vaccination rates and rates of influenza?</b></p>
 <ul>
-<li><b>Problem:</b>  Localized flu vaccine shortages while sufficient supply nationwide.  There is a need to predict influenza outbreakes.</li>
-<li><b>Hypothesis:</b>  Tweets from Twitter will indicate if there is an influenza outbreak.</li>
-<li><b>Test:</b>  Compare recent tweets to government data to determine if there is a correlation.</li>
+<li><b>Problem:</b>  During the recent flu season, the effectiveness of the vaccine was questioned?</li>
+<li><b>Hypothesis:</b>  If the vaccine is effective, then states with high vaccination rates will have low influenza rates.</li>
+<li><b>Test:</b>  Compare vaccination rates from Health and Human Services (HHS) and compare them to the rates of influenza from the Center of Disease Control (CDC).</li>
 </ul>
 <h3>Abstract</h3>
 <p>
 There have been recent concerns regarding flu vaccinations, flu outbreaks, and supplies of flu shots.
 </p>
 <p>
-The purpose of this project is to determine if Twitter can be used to predict flu outbreaks, thus mitigating recent concerns.
+The purpose of this project is to determine if the flu vaccinations were effective against the influenza of this year, thus mitigating recent concerns.
 <p>The Center Disease Control (CDC) publishes "PERCENTAGE OF VISITS FOR INFLUENZA-LIKE-ILLNESS REPORTED BY SENTINEL PROVIDERS" 
-from their "FluView" website (https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html).  This will be the government input. This 
-will be for the period Week 40, 2017 through Week 11, 2018.
+from their "FluView" website (https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html).
 </p>
 <p>
-Tweets for the same period will be selected.  The selection criteria will be phrases indicating that person has ILI or knows
-of someone who does.  
+The Health and Human Resources (HHS) publishes "trends: vaccination rates for an entire flu year" from their "HHS Flu Vaccination API" website (https://fluvaccineapi.hhs.gov).
 </p>
 <p>
-The Twitter source will be plotted against the CDC source.  
+If the vaccine were effective, states with low vaccination rates should have high influenza rates.  Conversely, states with high vaccination rates should have low influenza rates.  
 </p>
 <p>
-At that time a determination will be made if a correlation between Twitter and ILI exists.
+The HHS source will be plotted against the CDC source.  
 </p>
 <h3>Structure</h3>
 <img src="Structure.PNG">
