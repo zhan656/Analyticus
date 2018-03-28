@@ -36,7 +36,6 @@ If the vaccine were effective, states with low vaccination rates should have hig
 <p>
 The HHS source will be plotted against the CDC source.  
 </p>
-
 <h3>Structure</h3>
 <img src="Structure.PNG">
 <h3>Schedule</h3>
