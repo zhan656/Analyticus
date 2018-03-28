@@ -6,7 +6,7 @@
 # <p>Module:  merge_plot_data.py<p>
 # <p>Input 1:  CDC Influenza-Like-Illness Json File</p>
 # <p>Input 2:  HHS Vaccinations Json File</p>
-# <p>Output:  plot.json
+# <p>Output:  plot_national.json
 # <p>Description:
 # <ul>
 # <li>Load pandas.DataFrame from cdc.json file.</li>
@@ -52,7 +52,7 @@ df = pd.DataFrame(cdc_dict)
 # Inspect the cdc dataframe.
 df = df.T
 df = df.sort_values(by=['year', 'week'])
-df.head()
+# df.head()
 
 
 # In[6]:
