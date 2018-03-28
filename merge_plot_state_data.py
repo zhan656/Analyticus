@@ -22,6 +22,7 @@
 # Import dependances.
 import json
 import pandas as pd
+import numpy as np
 
 
 # In[2]:
@@ -49,7 +50,7 @@ df = pd.DataFrame(cdc_dict)
 # In[5]:
 
 
-# Inspect the cdc dataframe.
+# Sort by columns year, week, and state.
 df = df.T
 df = df.sort_values(by=['year', 'week', 'state'])
 # df.head()
@@ -58,53 +59,108 @@ df = df.sort_values(by=['year', 'week', 'state'])
 # In[6]:
 
 
-# Add vaccinations.
-df['vaccinations'] = 0
-df['vac_percent'] = 0
+# Build a dict from the dataframe.
+cases_dict = {}
+for i in list(df.index):
+    case_dict = {}
+    case_dict["flu_cases"] = df.loc[i,'cases']
+    case_dict["flu_percent"] = df.loc[i, 'flu_percent']
+    case_dict["year"] = df.loc[i,'year']
+    case_dict["state"] = df.loc[i,'state']
+    
+    # Normalize CDC Week to Plot Week.
+    if df.loc[i, 'year'] == 2017:
+        case_dict["week"] = df.loc[i,'week'] - 30
+    else:
+        case_dict["week"] = df.loc[i,'week'] + 22
+       
+    cases_dict[str(i)] = case_dict
 
 
 # In[7]:
 
 
-# df.head()
+# Orient columns.
+df_cdc = pd.DataFrame(cases_dict)
+df_cdc = df_cdc.T
 
 
 # In[8]:
 
 
-# Build a dict from the dataframe.
-cases_dict = {}
-for i in list(df.index):
-    case_dict = {}
-    case_dict["cases"] = df.loc[i,'cases']
-    case_dict["flu_percent"] = df.loc[i, 'flu_percent']
-    case_dict["year"] = df.loc[i,'year']
-    case_dict["state"] = df.loc[i,'state']
-    case_dict["week"] = df.loc[i,'week']
-    case_dict["vaccinations"] = df.loc[i,'vaccinations']
-    case_dict["vac_percent"] = df.loc[i,'vac_percent']
-    cases_dict[str(i)] = case_dict
+# df_cdc.head()
 
 
 # In[9]:
 
 
-# Format string to be suitable for a json file.
-cases_str = str(cases_dict)
-cases_str = cases_str.replace("'", '"')
+# Load pandas.Dataframe from hhs_state.json
+with open('data/hhs_state.json') as hhs_file:
+    hhs_dict = json.load(hhs_file)
 
 
 # In[10]:
 
 
-# Inspect resulting string.
-# cases_str
+# Create HHS dataframe from HHS dictionary.
+df_hhs = pd.DataFrame(hhs_dict)
+df_hhs = df_hhs.T
+# df_hhs.head()
 
 
 # In[11]:
 
 
-# Write string to cdc.json
-with open('data/plot_state.json', 'w') as f:
-    f.write(cases_str)
+# Reduce columns to those that are needed.
+df_hhs = df_hhs.filter(['count','name','percentage', 'week', 'year'], axis=1)
+# df_hhs.head()
+
+
+# In[12]:
+
+
+# Rename HHS dataframe columns to match CCD dataframe columns.
+df_hhs = df_hhs.rename(columns={'count':'vaccinations', 'name':'state', 'percentage':'vac_percent'})
+# df_hhs.head()
+
+
+# In[13]:
+
+
+# Merge with outer join the HHS and CDC dataframes.
+result = pd.merge(df_cdc, df_hhs, how='outer', on=['state', 'week', 'year'])
+result = result.sort_values(by=['week', 'state'])
+result.fillna(0, inplace=True)
+# result
+
+
+# In[14]:
+
+
+# Write the merged datafram to the json file.
+result.to_json('data/plot_state.json')
+
+
+# In[15]:
+
+
+# Sample code to access the json file.
+# with open('data/plot_state.json') as plot_state_file:
+#     plot_state_dict = json.load(plot_state_file)
+
+
+# In[16]:
+
+
+# Sample code to access the json file.
+# df_plot_state = pd.DataFrame(plot_state_dict)
+# df_plot_state = df_plot_state.sort_values(by=['week', 'state'])
+# df_plot_state.head()
+
+
+# In[17]:
+
+
+# Sample code to access the json file.
+# df_plot_state
 
