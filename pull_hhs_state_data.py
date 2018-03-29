@@ -1,23 +1,24 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 # Dependencies
 import requests
 import json
 import numpy as np
+import pandas as pd
 
 
-# In[2]:
+# In[ ]:
 
 
 # URL for GET requests to retrieve vehicle data
 url = "https://fluvaccineapi.hhs.gov/api/v2/ids/2017/states.json"
 
 
-# In[5]:
+# In[ ]:
 
 
 # Create a list of state codes.
@@ -26,7 +27,7 @@ state_codes.remove('DC')
 state_codes.remove('PR')
 
 
-# In[7]:
+# In[ ]:
 
 
 # Build a dictionary of HHS state data.
@@ -43,7 +44,7 @@ for state_code in state_codes:
         state_index += 1
 
 
-# In[9]:
+# In[ ]:
 
 
 # Format string to be suitable for a json file.
@@ -51,10 +52,42 @@ state_str = str(state_dict)
 state_str = state_str.replace("'", '"')
 
 
-# In[10]:
+# In[ ]:
 
 
-# Write string to cdc.json
+# Write string to hhs_state.json
 with open('data/hhs_state.json', 'w') as f:
     f.write(state_str)
+
+
+# In[ ]:
+
+
+# Sample code to access the json file.
+with open('data/hhs_state.json') as hhs_state_file:
+    hhs_state_dict = json.load(hhs_state_file)
+
+
+# In[ ]:
+
+
+# Sample code to access the json file.
+df_hhs = pd.DataFrame(hhs_state_dict)
+df_hhs.head()
+
+
+# In[ ]:
+
+
+# Sample code to access the json file.
+df_hhs = df_hhs.T
+df_hhs.head()
+
+
+# In[ ]:
+
+
+# Sample code to access the json file.
+df_hhs = df_hhs.sort_values(['week', 'name'])
+df_hhs.head()
 
