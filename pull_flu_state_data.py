@@ -33,7 +33,7 @@ df = pd.read_csv('data/cdc_state.csv')
 
 
 # Inspect dataframe
-df.head()
+# df.head()
 
 
 # In[ ]:
@@ -55,13 +55,6 @@ with open('data/cdc_state.json') as cdc_state_file:
 
 # Sample code to access the json file.
 df_cdc_state = pd.DataFrame(cdc_state_dict)
-df_cdc_state = df_cdc_state.sort_values(by=['Year', 'Week', 'State'])
-df_cdc_state.head()
-
-
-# In[ ]:
-
-
-# Inspect resulting string.
-# df_cdc_state
+df_cdc_state = df_cdc_state.sort_values(by=['Week', 'State'])
+df_cdc_state
 

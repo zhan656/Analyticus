@@ -31,8 +31,7 @@ state_codes.remove('PR')
 
 
 # Build a dictionary of HHS state data.
-state_dict = {}
-state_index = 0
+results = []
 for state_code in state_codes:
     
     url = "https://fluvaccineapi.hhs.gov/api/v2/vaccination_rates/trends/2017/states/{}.json?ethnicity=T&medicare_status=A".format(state_code)
@@ -40,24 +39,26 @@ for state_code in state_codes:
     state_list = requests.get(url).json()
     
     for i in np.arange(0, len(state_list)):
-        state_dict[str(state_index)] = state_list[i]
-        state_index += 1
+        results.append(state_list[i])
 
 
 # In[ ]:
 
 
-# Format string to be suitable for a json file.
-state_str = str(state_dict)
-state_str = state_str.replace("'", '"')
+df = pd.DataFrame(results)
 
 
 # In[ ]:
 
 
-# Write string to hhs_state.json
-with open('data/hhs_state.json', 'w') as f:
-    f.write(state_str)
+# Inspect dataframe
+# df.head()
+
+
+# In[ ]:
+
+
+df.to_json('data/hhs_state.json')
 
 
 # In[ ]:
@@ -80,14 +81,6 @@ df_hhs.head()
 
 
 # Sample code to access the json file.
-df_hhs = df_hhs.T
-df_hhs.head()
-
-
-# In[ ]:
-
-
-# Sample code to access the json file.
-df_hhs = df_hhs.sort_values(['week', 'name'])
-df_hhs.head()
+# df_hhs = df_hhs.sort_values(['week', 'name'])
+# df_hhs
 

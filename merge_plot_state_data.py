@@ -16,7 +16,7 @@
 # <li>Write json string to plot_state.json</li>
 # </ul>
 
-# In[1]:
+# In[ ]:
 
 
 # Import dependances.
@@ -25,7 +25,7 @@ import pandas as pd
 import numpy as np
 
 
-# In[2]:
+# In[ ]:
 
 
 # Load pandas.Dataframe from cdc.json
@@ -33,28 +33,41 @@ with open('data/cdc_state.json') as cdc_file:
     cdc_dict = json.load(cdc_file)
 
 
-# In[3]:
+# In[ ]:
 
 
 # Inspect cdc dictionary.
-# cdc_dict
+cdc_dict
 
 
-# In[4]:
+# In[ ]:
 
 
 # Build cdc dataframe from cdc dictionary.
 df = pd.DataFrame(cdc_dict)
 
 
-# In[5]:
+# In[ ]:
+
+
+# Inspect CDC dataframe.
+df.head()
+
+
+# In[ ]:
 
 
 # Sort by columns year, week, and state.
-df = df.sort_values(by=['Year', 'Week', 'State'])
+df = df.sort_values(by=['Week', 'State'])
 
 
-# In[6]:
+# In[ ]:
+
+
+df
+
+
+# In[ ]:
 
 
 # Build a dict from the dataframe.
@@ -74,7 +87,7 @@ for i in list(df.index):
     cases_dict[str(i)] = case_dict
 
 
-# In[7]:
+# In[ ]:
 
 
 # Orient columns.
@@ -82,7 +95,13 @@ df_cdc = pd.DataFrame(cases_dict)
 df_cdc = df_cdc.T
 
 
-# In[8]:
+# In[ ]:
+
+
+df_cdc.head()
+
+
+# In[ ]:
 
 
 # Load pandas.Dataframe from hhs_state.json
@@ -90,16 +109,16 @@ with open('data/hhs_state.json') as hhs_file:
     hhs_dict = json.load(hhs_file)
 
 
-# In[9]:
+# In[ ]:
 
 
 # Create HHS dataframe from HHS dictionary.
 df_hhs = pd.DataFrame(hhs_dict)
-df_hhs = df_hhs.T
+# df_hhs = df_hhs.T
 # df_hhs.head()
 
 
-# In[10]:
+# In[ ]:
 
 
 # Reduce columns to those that are needed.
@@ -107,15 +126,21 @@ df_hhs = df_hhs.filter(['count','name','percentage', 'week'], axis=1)
 # df_hhs.head()
 
 
-# In[11]:
+# In[ ]:
 
 
 # Rename HHS dataframe columns to match CCD dataframe columns.
 df_hhs = df_hhs.rename(columns={'count':'vaccinations', 'name':'state', 'percentage':'vac_percent'})
+
+
+# In[ ]:
+
+
+# Inspect dataframe
 # df_hhs.head()
 
 
-# In[12]:
+# In[ ]:
 
 
 # Merge with outer join the HHS and CDC dataframes.
@@ -125,14 +150,14 @@ result.fillna(0, inplace=True)
 # result
 
 
-# In[13]:
+# In[ ]:
 
 
 # Write the merged datafram to the json file.
 result.to_json('data/plot_state.json')
 
 
-# In[14]:
+# In[ ]:
 
 
 # Sample code to access the json file.
@@ -140,7 +165,7 @@ with open('data/plot_state.json') as plot_state_file:
     plot_state_dict = json.load(plot_state_file)
 
 
-# In[15]:
+# In[ ]:
 
 
 # Sample code to access the json file.
@@ -149,7 +174,7 @@ df_plot_state = df_plot_state.sort_values(by=['week', 'state'])
 df_plot_state.head()
 
 
-# In[16]:
+# In[ ]:
 
 
 # Sample code to access the json file.
