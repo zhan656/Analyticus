@@ -1,7 +1,14 @@
 
 # coding: utf-8
 
-# In[ ]:
+# <p>Class:  USC Viterbi Data Analytics Bootcamp</p>
+# <p>Team:  Analyticus (aka Team 5)</p>
+# <p>Module:  pull_hhs_state_data.py</p>
+# <p>Version:  March 31, 2018</p>
+# <p>Input:  HHS Vaccinations by state from HHS API for flu season 2017</p>
+# <p>Output:  HHS Vaccinations Json File for flu season 2017.</p>
+
+# In[1]:
 
 
 # Dependencies
@@ -11,27 +18,28 @@ import numpy as np
 import pandas as pd
 
 
-# In[ ]:
+# In[2]:
 
 
-# URL for GET requests to retrieve vehicle data
+# Format the URL to get state codes.
 url = "https://fluvaccineapi.hhs.gov/api/v2/ids/2017/states.json"
 
 
-# In[ ]:
+# In[3]:
 
 
-# Create a list of state codes.
+# Create the lsit of state codes, removing Distict of Columbia and Puerto Rico.
 state_codes = requests.get(url).json()
 state_codes.remove('DC')
 state_codes.remove('PR')
 
 
-# In[ ]:
+# In[4]:
 
 
-# Build a dictionary of HHS state data.
+# Build a list of state vaccination data.
 results = []
+
 for state_code in state_codes:
     
     url = "https://fluvaccineapi.hhs.gov/api/v2/vaccination_rates/trends/2017/states/{}.json?ethnicity=T&medicare_status=A".format(state_code)
@@ -42,45 +50,51 @@ for state_code in state_codes:
         results.append(state_list[i])
 
 
-# In[ ]:
+# In[5]:
 
 
+# Load a dataframe with the HHS data.
 df = pd.DataFrame(results)
 
 
-# In[ ]:
+# In[6]:
 
 
-# Inspect dataframe
-# df.head()
+# Inspect the HHS dataframe.
+df.head()
 
 
-# In[ ]:
+# In[7]:
 
 
-df.to_json('data/hhs_state.json')
+# Write the HHS data to a json file.
+df.to_json('../data/hhs_state.json')
 
 
-# In[ ]:
+# In[8]:
 
 
-# Sample code to access the json file.
-with open('data/hhs_state.json') as hhs_state_file:
-    hhs_state_dict = json.load(hhs_state_file)
+# Start the file validation process by loading the file into a dataframe.
+df1 = pd.read_json('../data/hhs_state.json')
 
 
-# In[ ]:
+# In[10]:
 
 
-# Sample code to access the json file.
-df_hhs = pd.DataFrame(hhs_state_dict)
-df_hhs.head()
+# Sort HHS data into state and week sequence to aid in inspection.
+df2 = df1.sort_values(by=['name', 'week'])
 
 
-# In[ ]:
+# In[11]:
 
 
-# Sample code to access the json file.
-# df_hhs = df_hhs.sort_values(['week', 'name'])
-# df_hhs
+# Inspect the HHS data.
+df2.head()
+
+
+# In[12]:
+
+
+# Inspect the HHS data.
+df2.tail()
 

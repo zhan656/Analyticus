@@ -3,17 +3,13 @@
 
 # <p>Class:  USC Viterbi Data Analytics Bootcamp</p>
 # <p>Team:  Analyticus (aka Team 5)</p>
-# <p>Module:  pull_flu_data.py<p>
-# <p>Input:  CDC Influenza-Like-Illness CSV File</p>
-# <p>Output:  cdc.json
-# <p>Description:
-# <ul>
-# <li>Load pandas.DataFrame from cdc.csv file.</li>
-# <li>Format json string by looping through the DataFrame</li>
-# <li>Write json string to cdc.json</li>
-# </ul>
+# <p>Module:  pull_flu_state_data.py<p>
+# <p>Version:  March 31, 2018
+# <p>Input:  CDC Influenza-Like-Illness CSV File at the state level.</p>
+# <p>Output:  CDC Influenza-Like_illness Json File at the state level.</p>
+# <p>Description:</p>
 
-# In[ ]:
+# In[1]:
 
 
 # Import dependances.
@@ -22,39 +18,51 @@ import csv
 import pandas as pd
 
 
-# In[ ]:
+# In[2]:
 
 
-# Load pandas.Dataframe from cdc.csv.
-df = pd.read_csv('data/cdc_state.csv')
+# Load the CDC state-level data into a dataframe.
+df = pd.read_csv('../data/cdc_state.csv')
 
 
-# In[ ]:
+# In[3]:
 
 
-# Inspect dataframe
-# df.head()
+# Inspect the CDC dataframe
+df.head()
 
 
-# In[ ]:
+# In[4]:
 
 
-df.to_json('data/cdc_state.json')
+# Write the CDC state-level data to a json file.
+df.to_json('../data/cdc_state.json')
 
 
-# In[ ]:
+# In[5]:
 
 
-# Sample code to access the json file.
-with open('data/cdc_state.json') as cdc_state_file:
-    cdc_state_dict = json.load(cdc_state_file)
+# Validate the output file by loading it into a dataframe.
+df2 = pd.read_json('../data/cdc_state.json')
 
 
-# In[ ]:
+# In[7]:
 
 
-# Sample code to access the json file.
-df_cdc_state = pd.DataFrame(cdc_state_dict)
-df_cdc_state = df_cdc_state.sort_values(by=['Week', 'State'])
-df_cdc_state
+# Sort the CDC state-level data by state and week to aid analysis.
+df2 = df2.sort_values(by=['State', 'Week'])
+
+
+# In[8]:
+
+
+# Validate CDC state-level data.
+df2.head()
+
+
+# In[9]:
+
+
+# Validate CDC state-level data.
+df2.tail()
 

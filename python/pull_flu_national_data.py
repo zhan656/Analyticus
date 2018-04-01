@@ -3,15 +3,10 @@
 
 # <p>Class:  USC Viterbi Data Analytics Bootcamp</p>
 # <p>Team:  Analyticus (aka Team 5)</p>
-# <p>Module:  pull_flu_data.py<p>
+# <p>Module:  pull_flu_national_data.py<p>
+# <p>Version:  March 31, 2018
 # <p>Input:  CDC Influenza-Like-Illness CSV File:  cdc_national.csv</p>
-# <p>Output:  cdc_national.json
-# <p>Description:
-# <ul>
-# <li>Load pandas.DataFrame from cdc_national.csv file.</li>
-# <li>Format json string by looping through the DataFrame</li>
-# <li>Write json string to cdc_national.json</li>
-# </ul>
+# <p>Output:  cdc_national.json</p>
 
 # In[1]:
 
@@ -22,23 +17,44 @@ import csv
 import pandas as pd
 
 
-# In[2]:
-
-
-# Load pandas.Dataframe from cdc.csv.
-df = pd.read_csv('data/cdc_national.csv')
-
-
 # In[3]:
 
 
-# Inspect dataframe
-df.head()
+# Load a dataframe with national CDC data.
+df = pd.read_csv('../data/cdc_national.csv')
 
 
 # In[4]:
 
 
-# Write string to cdc.json
-df.to_json('data/cdc_national.json')
+# Inspect the dataframe with the CDC national data.
+df.head()
+
+
+# In[5]:
+
+
+# Write the CDC data to a json file.
+df.to_json('../data/cdc_national.json')
+
+
+# In[8]:
+
+
+# Validate the json by loading it into a dataframe for inspection.
+df2 = pd.read_json('../data/cdc_national.json')
+
+
+# In[9]:
+
+
+# Validate the CDC data.
+df2.head()
+
+
+# In[10]:
+
+
+# Validate the CDC data.
+df2.tail()
 

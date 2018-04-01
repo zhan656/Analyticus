@@ -4,12 +4,12 @@
 # <p>Class:  USC Viterbi Data Analytics Bootcamp</p>
 # <p>Team:  Analyticus (aka Team 5)</p>
 # <p>Module:  merge_plot_national_data.py<p>
-# <p>Input 1:  CDC Influenza-Like-Illness Json File</p>
-# <p>Input 2:  HHS Vaccinations Json File</p>
-# <p>Output:  plot_national.json</p>
-# 
+# <p>Version:  March 31, 2018
+# <p>Input 1:  CDC Influenza-Like-Illness Json File for Flu Season 2017</p>
+# <p>Input 2:  HHS Vaccinations Json File for Flu Season 2017</p>
+# <p>Output:  A json file of merged input used for plots.</p>
 
-# In[ ]:
+# In[1]:
 
 
 # Import dependances.
@@ -17,25 +17,24 @@ import json
 import pandas as pd
 
 
-# In[ ]:
+# In[2]:
 
 
-# Load pandas.Dataframe from cdc_national.json
-with open('data/cdc_national.json') as cdc_file:
-    cdc_dict = json.load(cdc_file)
+# Load CDC data into a dataframe.
+df = pd.read_json('../data/cdc_national.json')
 
 
-# In[ ]:
+# In[3]:
 
 
-# Build a dataframe from cdc dictionary.
-df = pd.DataFrame(cdc_dict)
+# Inspect the dataframe.
+df.head()
 
 
-# In[ ]:
+# In[4]:
 
 
-# Build a dict from the dataframe.
+# Normalize CDC week to HHS week using a dictionary.
 cases_dict = {}
 for i in list(df.index):
     case_dict = {}
@@ -51,78 +50,135 @@ for i in list(df.index):
     cases_dict[str(i)] = case_dict
 
 
-# In[ ]:
+# In[5]:
 
 
-# Build cdc dataframe from cdc dictionary.
+# Load the CDC dataframe from the normalized dictionary.
 df_cdc = pd.DataFrame(cases_dict)
 
 
-# In[ ]:
+# In[6]:
 
 
-# Orient attributes as column headings.
+# Inspect the CDC dataframe.
+df_cdc.head()
+
+
+# In[7]:
+
+
+# Swap axis of the CDC dataframe so attributes are moved to columns.
 df_cdc = df_cdc.T
 
 
-# In[ ]:
+# In[8]:
 
 
-# Sort by week.
+# Inspect the CDC dataframe.
+df_cdc.head()
+
+
+# In[9]:
+
+
+# Sort by week to aid analysis.
 df_cdc = df_cdc.sort_values(['week'])
 
 
-# In[ ]:
+# In[10]:
 
 
-# Load hhs dictionary from hhs_national.json
-with open('data/hhs_national.json') as hhs_file:
-    hhs_dict = json.load(hhs_file)
+# Inspect the CDC dataframe.
+df_cdc.head()
 
 
-# In[ ]:
+# In[11]:
 
 
-# Load hhs dataframe from hhs dictionary
-df_hhs = pd.DataFrame(hhs_dict)
+# Load the HHS dataframe from the json file.
+df_hhs = pd.read_json('../data/hhs_national.json')
 
 
-# In[ ]:
+# In[12]:
 
 
-# Sort by week.
+# Inspect the HHS dataframe.
+df_hhs.head()
+
+
+# In[13]:
+
+
+# Sort by week to aid in analysis.
 df_hhs = df_hhs.sort_values(['week'])
 
 
-# In[ ]:
+# In[14]:
 
 
-# Merge the hhs and cdc dataframes.
+# Merge the CDC and HHS data into the results dataframe.
 result = pd.merge(df_cdc, df_hhs, how='outer', on=['week'])
+
+
+# In[15]:
+
+
+# Sort by week to aid in analysis.
 result = result.sort_values(by=['week'])
+
+
+# In[16]:
+
+
+# Replace null values with zeroes where there is not intersection between CDC and HHS data.
 result.fillna(0, inplace=True)
 
 
-# In[ ]:
+# In[17]:
 
 
-# Write the merged data to a json file.
-result.to_json('data/plot_national.json')
+# Inspect the result dataframe.
+result.head()
 
 
-# In[ ]:
+# In[18]:
 
 
-# Sample code for accessing the merged data.
-with open('data/plot_national.json') as plot_file:
-    plot_dict = json.load(plot_file)
+# Inspect the result dataframe.
+result.tail()
 
 
-# In[ ]:
+# In[19]:
 
 
-# Sample codee for accessing the merged data
-df_plot = pd.DataFrame(plot_dict)
+# Write the result dataframe to a json file for plots.
+result.to_json('../data/plot_national.json')
+
+
+# In[20]:
+
+
+# Validate the file by loading it to a dataframe.
+df_plot = pd.read_json('../data/hhs_national.json')
+
+
+# In[21]:
+
+
+# Sort the plot datafram to aid in analysis.
 df_plot = df_plot.sort_values(['week'])
-df_plot
+
+
+# In[22]:
+
+
+# Validate the plot dataframe.
+df_plot.head()
+
+
+# In[23]:
+
+
+# Validate the plot dataframe.
+df_plot.tail()
 
