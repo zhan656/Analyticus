@@ -27,7 +27,8 @@ from their "FluView" website (https://gis.cdc.gov/grasp/fluview/fluportaldashboa
 The Health and Human Resources (HHS) publishes "trends: vaccination rates for an entire flu year" from their "HHS Flu Vaccination API" website (https://fluvaccineapi.hhs.gov).
 </p>
 <p>
-If the vaccine were effective, states with low vaccination rates should have high influenza rates.  Conversely, states with high vaccination rates should have low influenza rates.  
+If the vaccine were effective, states with low vaccination rates should have high influenza rates. Conversely, states with high vaccination rates should have low influenza rates.
+The relationship can be tell from the 50 states influenza/vaccination maps (https://plot.ly/~zhan656). 
 </p>
 </p>
 </li>
