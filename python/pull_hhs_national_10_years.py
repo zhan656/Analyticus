@@ -122,7 +122,7 @@ df5.head()
 
 # Calculate vaccination rate percentage per week 
 # by finding the difference in the culmulative vaccination
-# rate between weeks.
+# rate between weeks. Loop through week
 for index_entry in df5.index:
     if df5.loc[index_entry, 'week'] == 1:
         df5.loc[index_entry, 'vac_pct_week'] = df5.loc[index_entry, 'vac_percent']
