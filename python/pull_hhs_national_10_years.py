@@ -11,7 +11,7 @@
 # In[3]:
 
 
-# Dependencies
+# Import Dependencies
 import requests
 import json
 import numpy as np
@@ -35,7 +35,7 @@ for year_entry in year_list:
 # In[5]:
 
 
-# Inspect the HHS data just downloaded into a dataframe.
+# Inspect the HHS data, just downloaded into a dataframe.
 df1.head()
 
 
