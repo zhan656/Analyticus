@@ -11,7 +11,7 @@
 # In[1]:
 
 
-# Dependencies
+# Import Dependencies
 import requests
 import json
 import numpy as np
