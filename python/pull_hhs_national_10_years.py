@@ -71,7 +71,7 @@ df3 = df2[['count', 'percentage', 'year', 'week']]
 # In[10]:
 
 
-# Rename columns to match the CCD data
+# Rename columns to match the CCD data, vac_percent for eligible population
 df4 = df3.rename(columns={"count":"vaccinations", "percentage":"vac_percent"})
 
 
